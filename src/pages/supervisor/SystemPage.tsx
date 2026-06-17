@@ -20,19 +20,18 @@ export default function SystemPage() {
 
   // Stats query
   const stats = useLiveQuery(async () => ({
-    townships:   await db.sys_township.count(),
-    rhcs:        await db.sys_rhc.count(),
-    srhcs:       await db.sys_srhc.count(),
-    villages:    await db.sys_village.count(),
-    hws:         await db.sys_chwamw.count(),
-    clients:     await db.clients.count(),
-    screenings:  await db.screenings.count(),
-    assessments: await db.assessments.count(),
-    counseling:  await db.counseling_logs.count(),
-    meds:        await db.pharmacotherapy.count(),
-    plans:       await db.ceta_plans.count(),
-    sessions:    await db.ceta_sessions.count(),
-    referrals:   await db.referrals.count(),
+    townships:      await db.sys_township.count(),
+    rhcs:           await db.sys_rhc.count(),
+    srhcs:          await db.sys_srhc.count(),
+    villages:       await db.sys_village.count(),
+    hws:            await db.sys_chwamw.count(),
+    focal_sessions: await db.focal_point_sessions.count(),
+    cpss_baseline:  await db.cpss_baseline.count(),
+    cpss_followups: await db.cpss_followups.count(),
+    cpss_final:     await db.cpss_final.count(),
+    ceta_baseline:  await db.ceta_baseline.count(),
+    ceta_followups: await db.ceta_followups.count(),
+    referrals:      await db.referrals.count(),
   }), [])
 
   // Users query
@@ -309,13 +308,12 @@ export default function SystemPage() {
         <div className="card" style={{ marginBottom: '12px' }}>
           <p className="section-title" style={{ marginTop: 0 }}>Mental Health Records</p>
           {[
-            ['Patients Registered',          stats?.clients],
-            ['Village Screenings (PHQ2/GAD2)',stats?.screenings],
-            ['Clinical Intakes (PHQ9/GAD7)',  stats?.assessments],
-            ['Counseling Sessions Logged',    stats?.counseling],
-            ['Pharmacotherapy Records',       stats?.meds],
-            ['CETA Treatment Plans',          stats?.plans],
-            ['CETA Session Records',          stats?.sessions],
+            ['Village Sessions (Focal Point)', stats?.focal_sessions],
+            ['CPSS Baseline Intakes',          stats?.cpss_baseline],
+            ['CPSS Follow-ups Logged',        stats?.cpss_followups],
+            ['CPSS Final Outcomes',           stats?.cpss_final],
+            ['CETA Baseline Intakes',         stats?.ceta_baseline],
+            ['CETA Weekly Sessions Logged',    stats?.ceta_followups],
             ['Inter-tier Referrals',          stats?.referrals],
           ].map(([label, val]) => (
             <div key={label as string} style={rowStyle}>

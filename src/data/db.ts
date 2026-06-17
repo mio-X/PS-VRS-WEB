@@ -243,6 +243,7 @@ export interface CETAFollowup {
 export interface Referral {
   AutoSr?: number
   Client_ID: string
+  Client_Name?: string
   Source_Tier: string // Focal Point, CPSS
   Target_Tier: string // CPSS, CETA
   Referral_Date: string

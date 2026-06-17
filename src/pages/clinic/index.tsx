@@ -28,7 +28,7 @@ function ClinicDashboard() {
 
     const referralsWithClient = refs.map(r => ({
       ...r,
-      client: clients.find(c => c.ClientID === r.Client_ID),
+      client: clients.find(c => c.ClientID === r.Client_ID) || { ClientName: r.Client_Name || 'Referred Patient', ClientID: r.Client_ID },
     })).sort((a, b) => b.Referral_Date.localeCompare(a.Referral_Date))
 
     const patientsWithStats = clients.map(c => {

@@ -47,13 +47,9 @@ export default function CPSSBaselineForm() {
         db.referrals.get(Number(referralIdParam)).then(ref => {
           if (ref) {
             setClientID(ref.Client_ID)
-            db.clients.where('Client_ID').equals(ref.Client_ID).first().then(cl => {
-              if (cl) {
-                setClientName(cl.Client_Name)
-                setAge(cl.Client_Age)
-                setGender(cl.Client_Gender === 'Male' || cl.Client_Gender === 'Female' ? cl.Client_Gender : 'Female')
-              }
-            })
+            if (ref.Client_Name) {
+              setClientName(ref.Client_Name)
+            }
           }
         })
       } else {

@@ -1,17 +1,13 @@
-import { useState, type FormEvent } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useLiveQuery } from 'dexie-react-hooks'
+import { useState, useEffect, type FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { db } from '../../data/db'
 import { Navbar } from '../../components/Layout'
 
 export default function ReferralForm() {
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
-  const clientIdFromUrl = searchParams.get('clientId') || ''
 
-  const clients = useLiveQuery(() => db.clients.toArray(), [])
-
-  const [selectedClientId, setSelectedClientId] = useState(clientIdFromUrl)
+  const [clientName, setClientName] = useState('')
+  const [clientID, setClientID] = useState('')
   const [referralDate, setReferralDate] = useState(new Date().toISOString().slice(0, 10))
   const [targetTier, setTargetTier] = useState('CPSS') // Default target is Clinic Level
   const [urgency, setUrgency] = useState('Routine')
@@ -20,18 +16,24 @@ export default function ReferralForm() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
-  const selectedClient = clients?.find(c => c.Client_ID === selectedClientId)
+  // Auto-generate a clinical client ID prefix on load
+  useEffect(() => {
+    const rand = Math.floor(10000 + Math.random() * 90000)
+    setClientID(`REF-CL-${rand}`)
+  }, [])
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    if (!selectedClient) { setError('Please select a client'); return }
+    if (!clientName.trim()) { setError('Please enter a client name'); return }
+    if (!clientID.trim()) { setError('Please enter a client ID'); return }
     if (!reason.trim()) { setError('Please provide a reason for referral'); return }
 
     setSaving(true)
     setError('')
     try {
       await db.referrals.add({
-        Client_ID: selectedClient.Client_ID,
+        Client_ID: clientID.trim(),
+        Client_Name: clientName.trim(),
         Source_Tier: 'Focal Point', // Since this is village portal
         Target_Tier: targetTier,
         Referral_Date: referralDate,
@@ -40,7 +42,7 @@ export default function ReferralForm() {
         Status: 'Pending',
         Outcome_Notes: notes.trim() || undefined,
       })
-      navigate('/field/clients')
+      navigate('/field')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Save failed')
     } finally {
@@ -58,22 +60,26 @@ export default function ReferralForm() {
           <form onSubmit={handleSubmit} className="form-card">
             <h2 style={{ fontSize: '1.25rem', marginBottom: '8px' }}>Send Client Referral Request</h2>
 
-            <div className="form-group">
-              <label>Select Client *</label>
-              {clientIdFromUrl ? (
-                <div style={{ padding: '12px 14px', background: 'var(--primary-light)', borderRadius: '10px', fontWeight: 600, color: 'var(--primary-dark)' }}>
-                  {selectedClient ? `${selectedClient.Client_Name} (${selectedClient.Client_ID})` : 'Loading client...'}
-                </div>
-              ) : (
-                <select value={selectedClientId} onChange={e => setSelectedClientId(e.target.value)} required>
-                  <option value="">– Select Client –</option>
-                  {clients?.map(c => (
-                    <option key={c.Client_ID} value={c.Client_ID}>
-                      {c.Client_Name} (ID: {c.Client_ID})
-                    </option>
-                  ))}
-                </select>
-              )}
+            <div className="form-row">
+              <div className="form-group">
+                <label>Client Name *</label>
+                <input 
+                  type="text" 
+                  value={clientName} 
+                  onChange={e => setClientName(e.target.value)} 
+                  required 
+                  placeholder="e.g. Daw Mya"
+                />
+              </div>
+              <div className="form-group">
+                <label>Client ID (Generated/Manual) *</label>
+                <input 
+                  type="text" 
+                  value={clientID} 
+                  onChange={e => setClientID(e.target.value)} 
+                  required 
+                />
+              </div>
             </div>
 
             <div className="form-row">

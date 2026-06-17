@@ -29,7 +29,7 @@ function CETADashboard() {
       .filter(r => r.Target_Tier === 'CETA')
       .map(r => ({
         ...r,
-        client: clients.find(c => c.ClientID === r.Client_ID) || { ClientName: 'CPSS Referred Patient', ClientID: r.Client_ID }
+        client: clients.find(c => c.ClientID === r.Client_ID) || { ClientName: r.Client_Name || 'Referred Patient', ClientID: r.Client_ID }
       })).sort((a, b) => b.Referral_Date.localeCompare(a.Referral_Date))
 
     const cetaClients = clients.map(c => {
