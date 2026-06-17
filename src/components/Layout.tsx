@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useLanguage } from '../context/LanguageContext'
+import ThemeCustomizer from './ThemeCustomizer'
 
 interface NavbarProps {
   title: string
@@ -10,6 +12,7 @@ interface NavbarProps {
 export function Navbar({ title, showBack, backTo }: NavbarProps) {
   const navigate = useNavigate()
   const { user, logout } = useAuth()
+  const { locale, toggleLanguage } = useLanguage()
 
   const handleBack = () => {
     if (backTo) navigate(backTo)
@@ -29,11 +32,24 @@ export function Navbar({ title, showBack, backTo }: NavbarProps) {
         </button>
       )}
       <span className="navbar-title">{title}</span>
-      {user && (
-        <button className="navbar-action" onClick={handleLogout} title={`${user.username} (${user.levelDesp})`}>
-          Logout
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <ThemeCustomizer />
+
+        <button 
+          className="navbar-action" 
+          onClick={toggleLanguage} 
+          style={{ fontWeight: 600 }}
+        >
+          {locale === 'en' ? 'မြန်မာ' : 'English'}
         </button>
-      )}
+
+        {user && (
+          <button className="navbar-action" onClick={handleLogout} title={`${user.username} (${user.levelDesp})`}>
+            {locale === 'en' ? 'Logout' : 'ထွက်ရန်'}
+          </button>
+        )}
+      </div>
     </nav>
   )
 }

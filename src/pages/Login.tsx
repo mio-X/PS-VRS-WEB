@@ -28,19 +28,19 @@ export default function Login() {
     <div style={{ minHeight: '100svh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
       <div style={{ width: '100%', maxWidth: '360px' }}>
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <div style={{ fontSize: '3rem', marginBottom: '8px' }}>🏥</div>
-          <h1 style={{ fontSize: '1.5rem', color: 'var(--primary)', marginBottom: '4px' }}>VRS</h1>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Village Reporting System</p>
+          <div style={{ fontSize: '3.5rem', marginBottom: '8px', filter: 'drop-shadow(0 4px 8px rgba(15,118,110,0.15))' }}>🌿</div>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--primary)', marginBottom: '4px', letterSpacing: '-0.03em' }}>Mindvibe</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>3-Tiered Mental Health Support Platform</p>
         </div>
 
         {/* Demo credentials hint */}
         <div style={{
-          marginBottom: '16px', padding: '10px 14px',
-          background: '#E3F2FD', borderRadius: '8px',
-          fontSize: '0.8rem', color: '#1565C0', lineHeight: '1.6',
+          marginBottom: '20px', padding: '12px 16px',
+          background: 'var(--primary-light)', borderRadius: '10px',
+          fontSize: '0.85rem', color: 'var(--primary-dark)', border: '1px solid #ccfbf1', lineHeight: '1.6',
         }}>
-          <strong>Demo accounts</strong><br />
-          Admin / Admin &nbsp;·&nbsp; User / User &nbsp;·&nbsp; Field / Field
+          <strong>Clinical Portals logins:</strong><br />
+          FocalPoint / FocalPoint &nbsp;·&nbsp; CPSS / CPSS &nbsp;·&nbsp; CETA / CETA
         </div>
 
         <div className="card">
@@ -76,7 +76,7 @@ export default function Login() {
         </div>
 
         <p style={{ textAlign: 'center', marginTop: '24px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-          MNCH Programme
+          Community Mental Health Services
         </p>
       </div>
     </div>

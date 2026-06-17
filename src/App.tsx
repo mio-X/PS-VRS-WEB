@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { AuthProvider, useAuth, LEVEL_READONLY, LEVEL_ADMIN, LEVEL_DBADMIN } from './context/AuthContext'
+import { AuthProvider, useAuth, LEVEL_READONLY, LEVEL_CETA, LEVEL_CPSS, LEVEL_FOCALPOINT, LEVEL_DBADMIN } from './context/AuthContext'
 import Login from './pages/Login'
 import FieldHome from './pages/field/index'
 import ClinicHome from './pages/clinic/index'
@@ -9,13 +9,16 @@ function RootRedirect() {
   const { user } = useAuth()
   if (!user) return <Navigate to="/login" replace />
 
-  // Admins, DB admins, and read-only → supervisor dashboard (reports)
-  if (user.level === LEVEL_ADMIN || user.level === LEVEL_DBADMIN || user.level === LEVEL_READONLY) {
-    return <Navigate to="/supervisor" replace />
+  if (user.level === LEVEL_FOCALPOINT) {
+    return <Navigate to="/field" replace />
   }
-  // Read/Write and Edit → field data entry
-  return <Navigate to="/field" replace />
+  if (user.level === LEVEL_CPSS) {
+    return <Navigate to="/clinic" replace />
+  }
+  // CETA, Admin, and Read Only → supervisor portal
+  return <Navigate to="/supervisor" replace />
 }
+
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user } = useAuth()

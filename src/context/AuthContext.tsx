@@ -59,14 +59,15 @@ export function useAuth(): AuthContextValue {
   return ctx
 }
 
-// User level constants (from tblSys_UserLevel)
-// 1 = System Admin, 2 = Read Only, 3 = Read/Write, 4 = Edit, 5 = DB Admin
-export const LEVEL_ADMIN = 1
+// User level constants (from sys_userLevel.csv)
+// 1 = CETA Counsellor / Supervisor, 2 = Read Only, 3 = CPSS Clinic Worker, 4 = Focal Point Village Worker, 5 = DB Admin
+export const LEVEL_CETA = 1
 export const LEVEL_READONLY = 2
-export const LEVEL_READWRITE = 3
-export const LEVEL_EDIT = 4
+export const LEVEL_CPSS = 3
+export const LEVEL_FOCALPOINT = 4
 export const LEVEL_DBADMIN = 5
 
 export function canWrite(level: number): boolean {
-  return level === LEVEL_READWRITE || level === LEVEL_EDIT || level === LEVEL_ADMIN || level === LEVEL_DBADMIN
+  return level === LEVEL_FOCALPOINT || level === LEVEL_CPSS || level === LEVEL_CETA || level === LEVEL_DBADMIN
 }
+

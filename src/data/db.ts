@@ -14,184 +14,242 @@ export interface Client {
   Client_StartDate: string
   Client_Name: string
   Client_Age: number
-  Client_Village: number
-  Preg_LMP?: string
-  Preg_EDD?: string
-  Preg_G?: number
-  Preg_P1?: number
-  Preg_P2?: number
-  Preg_History?: string
-  PastPreg_BOH_YN?: boolean
-  PastPreg_DeliveredBy?: number
-  PastPreg_Note?: string
-  BirthPlan_Place?: string
-  BirthPlan_Attendant?: number
-  BirthPlan_Note?: string
+  Client_Gender: string
+  Client_Phone?: string
   Client_Remark?: string
 }
 
-export interface ANC {
+export interface Screening {
   AutoSr?: number
-  TS_Pcode: string
-  RHC_Code: number
-  SRHC_Code: number
-  Village_Pcode: number
-  CHWAMW: string
-  HW_ID: number
   Client_ID: string
-  ANC_Sr: number
-  ANC_Date: string
-  ANC_Provider?: number
-  ANC_PregnancyWeek?: number
-  ANC_Presentation?: string
-  ANC_FHS?: boolean
-  ANC_BPS?: number
-  ANC_BPD?: number
-  ANC_Weight?: number
-  ANC_AbdominalExam?: string
-  ANC_Anemia?: boolean
-  ANC_DangerSign?: boolean
-  ANC_TT?: number
-  ANC_IronFolate?: number
-  ANC_VitaB1?: number
-  ANC_CDK?: boolean
-  ANC_Deworming?: boolean
-  ANC_HE1?: boolean; ANC_HE2?: boolean; ANC_HE3?: boolean; ANC_HE4?: boolean
-  ANC_HE5?: boolean; ANC_HE6?: boolean; ANC_HE7?: boolean; ANC_HE8?: boolean
-  ANC_HE9?: boolean; ANC_HE10?: boolean
-  ANC_Remark?: string
+  Screening_Date: string
+  HW_ID: number
+  PHQ2_1: number // 0-3
+  PHQ2_2: number // 0-3
+  PHQ2_Score: number // 0-6
+  GAD2_1: number // 0-3
+  GAD2_2: number // 0-3
+  GAD2_Score: number // 0-6
+  Substance_Use: boolean
+  Suicide_Risk: boolean
+  Referral_Needed: boolean
+  Notes?: string
 }
 
-export interface Delivery {
+export interface Assessment {
   AutoSr?: number
-  TS_Pcode: string
-  RHC_Code: number
-  SRHC_Code: number
-  Village_Pcode: number
-  CHWAMW: string
-  HW_ID: number
   Client_ID: string
-  Delivery_Date: string
-  Delivery_Time?: string
-  Delivery_By?: number
-  Delivery_How?: number
-  Delivery_MotherOutcome?: number
-  Delivery_MotherBleeding?: number
-  Delivery_CDK?: boolean
-  ChildSr?: number
-  Delivery_ChildOutcome?: number
-  Delivery_ChildWeight?: number
-  Delivery_ChildSex?: number
-  Delivery_Place?: number
-  Delivery_ChildBF?: number
-  Delivery_ChildBF1Hour?: boolean
-  Delivery_ChildRespiration?: number
-  Delivery_Remark?: string
+  Assessment_Date: string
+  Assessor_Name: string
+  PHQ9_Score: number // 0-27
+  GAD7_Score: number // 0-21
+  Functional_Impairment: number // 0-10
+  Primary_Problem: string // Depression, Anxiety, Trauma, Substance Use, Suicide Risk
+  Diagnosis_Notes?: string
 }
 
-export interface PNC {
+export interface CounselingLog {
   AutoSr?: number
-  TS_Pcode: string
-  RHC_Code: number
-  SRHC_Code: number
-  Village_Pcode: number
-  CHWAMW: string
-  HW_ID: number
   Client_ID: string
-  PNC_Sr: number
-  PNC_Date: string
-  PNC_Temperature?: number
-  PNC_BPS?: number
-  PNC_BPD?: number
-  PNC_Anemia?: boolean
-  PNC_IronFolate?: boolean
-  PNC_VitaB1?: number
-  PNC_VitaA?: boolean
-  PNC_HE1?: boolean; PNC_HE2?: boolean; PNC_HE3?: boolean; PNC_HE4?: boolean
-  PNC_HE5?: boolean; PNC_HE6?: boolean; PNC_HE7?: boolean; PNC_HE8?: boolean
-  PNC_HE9?: boolean; PNC_HE10?: boolean
-  PNC_Remark?: string
+  Session_Date: string
+  Session_Number: number
+  Session_Type: string
+  Session_Notes: string
+  Next_Session_Date?: string
+  Supervisor_Feedback?: string
 }
 
-export interface NBC {
+export interface Pharmacotherapy {
   AutoSr?: number
-  TS_Pcode: string
-  RHC_Code: number
-  SRHC_Code: number
-  Village_Pcode: number
-  CHWAMW: string
-  HW_ID: number
   Client_ID: string
-  ChildSr?: number
-  NBC_Name?: string
-  NBC_Sr: number
-  NBC_Date: string
-  NBC_Weight?: number
-  NBC_KGLB?: string
-  NBC_Temperature?: number
-  NBC_BirthDefect?: boolean
-  NBC_Warming?: boolean
-  NBC_CordDryClean?: boolean
-  NBC_CordChlorhexadine?: boolean
-  NBC_EBF?: boolean
-  NBC_Jaundice?: boolean
-  NBC_Respiration?: boolean
-  NBC_Skin?: boolean
-  NBC_DangerSign?: boolean
-  NBC_Remark?: string
+  Prescribed_Date: string
+  Medication_Name: string
+  Dosage: string
+  Frequency: string
+  Adherence_Level: string // High, Medium, Low
+  Side_Effects?: string
+  Prescriber: string
+}
+
+export interface CETAPlan {
+  AutoSr?: number
+  Client_ID: string
+  Plan_Date: string
+  CETA_Elements: string // Comma-separated: e.g. "Psychoeducation,Cognitive Coping,Behavioral Activation"
+  Status: string // Active, Completed, Suspended
+}
+
+export interface CETASession {
+  AutoSr?: number
+  Client_ID: string
+  Session_Date: string
+  Session_Number: number
+  Elements_Delivered: string // Comma-separated elements
+  Client_Progress: string
+  PHQ9_Score?: number
+  GAD7_Score?: number
+  Safety_Checked: boolean
+  Suicide_Risk_Level: string // None, Low, Medium, High
+  Homework_Assigned?: string
+  Notes?: string
+  Supervisor_Feedback?: string
+}
+
+// ── CETA Form.xlsx Excel Sync Schemas ──────────────────────────────────────────
+
+export interface FocalPointSession {
+  AutoSr?: number
+  SessionID: string
+  ProviderName: string
+  SupervisorName: string
+  ClinicName: string
+  VillageName: string
+  Date: string
+  Male: number
+  Female: number
+  PeopleReviewed: number
+  People5Signs: number
+  CPSSNew: number
+  CPSSFollowup: number
+  StressHandoutShared: number
+  ChangeHandoutShared: number
+  VideoShared: number
+  Feeling?: string
+  Feeback?: string
+}
+
+export interface CPSSBaseline {
+  AutoSr?: number
+  Date: string
+  ClinicName: string
+  VillageName: string
+  ProviderName: string
+  ClientID: string
+  ClientName: string
+  Age: number
+  Gender: string
+  ClientType: string
+  CPSSHowHear: string
+  ProblemScore: number
+  Safety: string
+  SubstanceUse: string
+  Notes?: string
+  FollowUpPermission: string
+  DenyReason?: string
+}
+
+export interface CPSSFollowup {
+  AutoSr?: number
+  SessionID: string
+  FollowupDate: string
+  ClientID: string
+  ProviderID: string
+  FinalResultSafety: string
+  ActionTakenSafety?: string
+  FinalResultAssess: string
+  FollowupProblemScore: number
+  SUTreatment: string
+  ReferOther?: string
+  OtherService?: string
+  ReferCETA: string
+  CETATreatment: string
+  DenyReason?: string
+  DenyDate?: string
+  ReferCETADate?: string
+}
+
+export interface CPSSFinal {
+  AutoSr?: number
+  ClientID: string
+  Completed: string
+}
+
+export interface CETABaseline {
+  AutoSr?: number
+  CPSSRefer: string
+  CPSSClientID?: string
+  CETAClientID?: string
+  ClientID: string
+  ClientName: string
+  Gender: string
+  Age: number
+  ClientType: string
+  ClinicName: string
+  VillageName: string
+  CounselorName: string
+  ClientBackground: string
+  AssessmentDate: string
+  BaselineCMFProgblemScore: number
+  BaselineCMFSU: number
+  MH1: number
+  MH2: number
+  MH3: number
+  MH4: number
+  MH5: number
+  MH6: number
+  MH7: number
+  MH8: number
+  MH9: number
+  MH10: number
+  MH11: number
+  MH12: number
+  MH13: number
+  MH14: number
+  MH15: number
+  MH16: number
+  MH17: number
+  CDMTRelaxation: number
+  CDMTActive: number
+  CDMTLive: number
+  CDMTTDM: number
+  TDWGeneral: number
+  CDMTSolvingProblem: number
+  Functioning: number
+  BaselineTLFB: number
+  TraumasExperienced: string
+  HighRisk: string
+  SafetyPlan: string
+  FinalFlow: string
+  Outcome: string
+  DropoutReason?: string
+  ExternalReferCETA?: string
+}
+
+export interface CETAFollowup {
+  AutoSr?: number
+  SessionID: string
+  SessionDate: string
+  ClientID: string
+  ProviderID: string
+  SessionNumber: number
+  SessionType: string
+  WeeklyCMFProblemScore: number
+  CMFSU1: number
+  CMFSU2: number
+  TLFB: number
+  SI: string
+  HI: string
+  IPV: string
+  SafetyPlan: string
+  Component1Done: string
+  Component1Time: number
+  Component2Done: string
+  Component2Time: number
+  TotalSessionDuration: number
+  CaseNotes?: string
+  NextPlan?: string
 }
 
 export interface Referral {
   AutoSr?: number
-  TS_Pcode: string
-  RHC_Code: number
-  SRHC_Code: number
-  Village_Pcode: number
-  CHWAMW: string
-  HW_ID: number
   Client_ID: string
-  Ref_Date: string
-  Ref_MorC?: number
-  Ref_DestinationSite?: number
-  Ref_Reason?: string
-  Ref_Completeness?: boolean
-  Ref_Outcome?: string
-  Ref_Remark?: string
-}
-
-export interface VHWRegister {
-  id?: number
-  TS_Pcode: string
-  RHC_Code: number
-  SRHC_Code: number
-  Village_Pcode: number
-  CHWAMW: string
-  HW_ID: number
-  Report_Month: number
-  Report_Year: number
-  SrNo: number
-  RegisterDate: string
-  Patient_Name: string
-  Patient_Sex: number
-  Patient_AgeInYear: number
-  Patient_Village?: string
-  Patient_Type?: number
-  Find_NotDrinkEat?: boolean; Find_Vomit?: boolean; Find_Fit?: boolean
-  Find_NotWakeUp?: boolean; Find_FastBreath?: boolean; Find_Chest?: boolean
-  Find_Stridor?: boolean; Find_Blood?: boolean; Find_Restless?: boolean
-  Find_SunkenEye?: boolean; Find_Thirsty?: boolean; Find_SkinVery?: boolean
-  Find_SkinSlow?: boolean; Find_Fever?: boolean; Find_Other?: string
-  Case_VerySeverePneumonia?: boolean; Case_SeverePneumonia?: boolean
-  Case_Pneumonia?: boolean; Case_Cough?: boolean
-  Case_DiarrWith?: boolean; Case_DiarrNoWith?: boolean; Case_Dysentry?: boolean
-  Case_CoughThan21?: boolean; Case_CoughNotThan21?: boolean
-  Case_DiarrThan14?: boolean; Case_DiarrNotThan14?: boolean; Other_Case?: string
-  Treat_ORS?: number; Treat_Zinc?: number; Treat_ParaSyr?: number
-  Treat_ParaTab250?: number; Treat_ParaTab500?: number
-  Treat_Amoxil?: number; Treat_Cotrimoxazole?: number; Treat_OtherDrug?: string
-  ReferredYN?: boolean
-  ArrivedYN?: boolean
-  Remark?: string
+  Source_Tier: string // Focal Point, CPSS
+  Target_Tier: string // CPSS, CETA
+  Referral_Date: string
+  Reason: string
+  Urgency: string // Routine, Urgent, Crisis
+  Status: string // Pending, Accepted, Completed
+  Outcome_Notes?: string
 }
 
 // ── System / reference types ────────────────────────────────────────────────
@@ -282,12 +340,20 @@ export interface SysUser {
 
 class VRSDatabase extends Dexie {
   clients!: EntityTable<Client, 'AutoSr'>
-  anc!: EntityTable<ANC, 'AutoSr'>
-  delivery!: EntityTable<Delivery, 'AutoSr'>
-  pnc!: EntityTable<PNC, 'AutoSr'>
-  nbc!: EntityTable<NBC, 'AutoSr'>
-  referral!: EntityTable<Referral, 'AutoSr'>
-  vhwRegister!: EntityTable<VHWRegister, 'id'>
+  screenings!: EntityTable<Screening, 'AutoSr'>
+  assessments!: EntityTable<Assessment, 'AutoSr'>
+  counseling_logs!: EntityTable<CounselingLog, 'AutoSr'>
+  pharmacotherapy!: EntityTable<Pharmacotherapy, 'AutoSr'>
+  ceta_plans!: EntityTable<CETAPlan, 'AutoSr'>
+  ceta_sessions!: EntityTable<CETASession, 'AutoSr'>
+  referrals!: EntityTable<Referral, 'AutoSr'>
+
+  focal_point_sessions!: EntityTable<FocalPointSession, 'AutoSr'>
+  cpss_baseline!: EntityTable<CPSSBaseline, 'AutoSr'>
+  cpss_followups!: EntityTable<CPSSFollowup, 'AutoSr'>
+  cpss_final!: EntityTable<CPSSFinal, 'AutoSr'>
+  ceta_baseline!: EntityTable<CETABaseline, 'AutoSr'>
+  ceta_followups!: EntityTable<CETAFollowup, 'AutoSr'>
 
   sys_township!: EntityTable<SysTownship, 'TS_PCode'>
   sys_rhc!: EntityTable<SysRHC, 'RHC_Code'>
@@ -303,7 +369,7 @@ class VRSDatabase extends Dexie {
 
   constructor() {
     super('VRS')
-    // Version 1: core clinical and reference tables
+    // Keep old versions structure for upgrade path if browser has existing DB
     this.version(1).stores({
       clients:     '++AutoSr, Client_ID, [TS_Pcode+RHC_Code], HW_ID, Client_StartDate',
       anc:         '++AutoSr, Client_ID, [TS_Pcode+RHC_Code], ANC_Date',
@@ -311,6 +377,32 @@ class VRSDatabase extends Dexie {
       pnc:         '++AutoSr, Client_ID, [TS_Pcode+RHC_Code], PNC_Date',
       nbc:         '++AutoSr, Client_ID, [TS_Pcode+RHC_Code], NBC_Date',
       referral:    '++AutoSr, Client_ID, [TS_Pcode+RHC_Code], Ref_Date',
+      sys_township:   'TS_PCode, Org_Short',
+      sys_rhc:        'RHC_Code, TS_Pcode',
+      sys_srhc:       'SRHC_Code, [TS_Pcode+RHC_Code], RHC_Code',
+      sys_village:    'Village_Pcode, [TS_Pcode+RHC_Code+SRHC_Code], RHC_Code',
+      sys_chwamw:     'HW_ID, [TS_Pcode+RHC_Code], CHWAMW',
+      sys_org:        'Org_Short',
+      sys_drug:       'DrugID',
+      sys_lookup:     '[UseID+ID], UseID',
+      sys_lookupMain: 'UseID',
+      sys_userLevel:  'UserLevel',
+      sys_user:       'UserName, UserLevel',
+    })
+    
+    this.version(2).stores({
+      vhwRegister: '++id, [TS_Pcode+RHC_Code+HW_ID], Report_Year, Report_Month, HW_ID',
+    })
+
+    this.version(3).stores({
+      clients:         '++AutoSr, Client_ID, HW_ID, Client_StartDate',
+      screenings:      '++AutoSr, Client_ID, Screening_Date',
+      assessments:     '++AutoSr, Client_ID, Assessment_Date',
+      counseling_logs: '++AutoSr, Client_ID, Session_Date',
+      pharmacotherapy: '++AutoSr, Client_ID, Prescribed_Date',
+      ceta_plans:      '++AutoSr, Client_ID, Plan_Date',
+      ceta_sessions:   '++AutoSr, Client_ID, Session_Date',
+      referrals:       '++AutoSr, Client_ID, Referral_Date, Status',
 
       sys_township:   'TS_PCode, Org_Short',
       sys_rhc:        'RHC_Code, TS_Pcode',
@@ -324,36 +416,82 @@ class VRSDatabase extends Dexie {
       sys_userLevel:  'UserLevel',
       sys_user:       'UserName, UserLevel',
     })
-    // Version 2: add iCCM VHW patient register (missed from initial schema)
-    this.version(2).stores({
-      vhwRegister: '++id, [TS_Pcode+RHC_Code+HW_ID], Report_Year, Report_Month, HW_ID',
+
+    this.version(4).stores({
+      clients:         '++AutoSr, Client_ID, HW_ID, Client_StartDate',
+      screenings:      '++AutoSr, Client_ID, Screening_Date',
+      assessments:     '++AutoSr, Client_ID, Assessment_Date',
+      counseling_logs: '++AutoSr, Client_ID, Session_Date',
+      pharmacotherapy: '++AutoSr, Client_ID, Prescribed_Date',
+      ceta_plans:      '++AutoSr, Client_ID, Plan_Date',
+      ceta_sessions:   '++AutoSr, Client_ID, Session_Date',
+      referrals:       '++AutoSr, Client_ID, Referral_Date, Status',
+
+      sys_township:   'TS_PCode, Org_Short',
+      sys_rhc:        'RHC_Code, TS_Pcode',
+      sys_srhc:       'SRHC_Code, [TS_Pcode+RHC_Code], RHC_Code',
+      sys_village:    'Village_Pcode, [TS_Pcode+RHC_Code+SRHC_Code], RHC_Code',
+      sys_chwamw:     'HW_ID, [TS_Pcode+RHC_Code], CHWAMW',
+      sys_org:        'Org_Short',
+      sys_drug:       'DrugID',
+      sys_lookup:     '[UseID+ID], UseID',
+      sys_lookupMain: 'UseID',
+      sys_userLevel:  'UserLevel',
+      sys_user:       'UserName, UserLevel',
+    })
+
+    // Version 5: CETA Form.xlsx schema sync
+    this.version(5).stores({
+      focal_point_sessions: '++AutoSr, SessionID, ClinicName, VillageName, Date',
+      cpss_baseline: '++AutoSr, ClientID, ClientName, ClinicName, VillageName, Date',
+      cpss_followups: '++AutoSr, SessionID, ClientID, FollowupDate',
+      cpss_final: '++AutoSr, ClientID, Completed',
+      ceta_baseline: '++AutoSr, ClientID, ClientName, ClinicName, VillageName, AssessmentDate',
+      ceta_followups: '++AutoSr, SessionID, ClientID, SessionDate',
+      referrals: '++AutoSr, Client_ID, Referral_Date, Status',
+
+      // Deprecated tables kept for compatibility
+      clients:         '++AutoSr, Client_ID, HW_ID, Client_StartDate',
+      screenings:      '++AutoSr, Client_ID, Screening_Date',
+      assessments:     '++AutoSr, Client_ID, Assessment_Date',
+      counseling_logs: '++AutoSr, Client_ID, Session_Date',
+      pharmacotherapy: '++AutoSr, Client_ID, Prescribed_Date',
+      ceta_plans:      '++AutoSr, Client_ID, Plan_Date',
+      ceta_sessions:   '++AutoSr, Client_ID, Session_Date',
+
+      sys_township:   'TS_PCode, Org_Short',
+      sys_rhc:        'RHC_Code, TS_Pcode',
+      sys_srhc:       'SRHC_Code, [TS_Pcode+RHC_Code], RHC_Code',
+      sys_village:    'Village_Pcode, [TS_Pcode+RHC_Code+SRHC_Code], RHC_Code',
+      sys_chwamw:     'HW_ID, [TS_Pcode+RHC_Code], CHWAMW',
+      sys_org:        'Org_Short',
+      sys_drug:       'DrugID',
+      sys_lookup:     '[UseID+ID], UseID',
+      sys_lookupMain: 'UseID',
+      sys_userLevel:  'UserLevel',
+      sys_user:       'UserName, UserLevel',
     })
   }
 }
 
 export const db = new VRSDatabase()
 
-// When another tab opens a newer version, close this connection so the
-// upgrade can proceed instead of blocking indefinitely.
 db.on('versionchange', () => {
   db.close()
   window.location.reload()
 })
 
-// If the upgrade is blocked by another tab that didn't respond, reload
-// to force-close the old connection.
 db.on('blocked', () => {
   window.location.reload()
 })
 
-// Close the connection when Vite HMR replaces this module so the new
-// instance can open the upgraded database without being blocked.
 if (import.meta.hot) {
   import.meta.hot.dispose(() => db.close())
 }
 
-/** Wipe the entire local database and reload (admin / recovery use only). */
+/** Wipe the entire local database and reload. */
 export async function resetDatabase(): Promise<void> {
   await db.delete()
   window.location.reload()
 }
+
